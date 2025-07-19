@@ -1,37 +1,42 @@
 {% set name = "eemont" %}
-{% set version = "0.3.6" %}
+{% set version = "2025.7.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 49f4c1f7e2ae432ec678875177619b1fed2e99017a810aa49a4c760fc0994ef0
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eemont-{{ version }}.tar.gz
+  sha256: 9c6e2ea4338bc5932b44b2d97de399f4b904a6e8d0f0c7b4a1110d407eaaeb46
 
 build:
-  number: 0
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
 
 requirements:
   host:
+    - python >=3.8
+    - setuptools >=61.0
+    - wheel
     - pip
-    - python >=3.6
   run:
+    - python >=3.8
     - beautifulsoup4
-    - earthengine-api
-    - ee_extra >=0.0.15
-    - geopy
+    - ee_extra >=2025.7.2
     - numpy
     - pandas
-    - python >=3.6
     - python-box >=6.0.0
+    - geopy
     - requests
 
 test:
   imports:
     - eemont
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
   home: https://github.com/davemlz/eemont
